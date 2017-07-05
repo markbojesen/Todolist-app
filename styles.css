@@ -1,0 +1,12 @@
+
+html {
+  font-family: arial;
+}
+
+button {
+  background-color: palevioletred;
+  border-radius: 6px;
+  padding: .6rem;
+  margin: .3rem;
+  font-weight: 600;
+}
