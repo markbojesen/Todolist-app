@@ -16,28 +16,26 @@ const todoList = {
     const todo = this.todos[position];
     todo.completed = !todo.completed;
   },
-
-  // Get number of completed todos
-  toggleAll: function() {
+  toggleAll: function() { 
     const totalTodos = this.todos.length;
     let completedTodos = 0;
-    for (let i = 0; i < totalTodos; i++) {
-      if (this.todos[i].completed === true) {
+
+    // Get number of completed todos.   
+    this.todos.forEach(function(todo) {
+      if (todo.completed === true) {
         completedTodos++;
       }
-    }
-
-    // 1, If everything is true, make everything false
-    if (completedTodos === totalTodos) {
-      for (let i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = false;
+    });
+    
+    this.todos.forEach(function(todo) {
+      // Case 1 if everything is true, make everything false
+      if (completedTodos === totalTodos) {
+        todo.completed = false;
+        // Case 2, otherwise make everything true.
+      } else {
+        todo.completed = true;
       }
-      // 2, Otherwise make everything true
-    } else {
-      for (let i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = true;
-      }
-    }
+    });
   }
 };
 
