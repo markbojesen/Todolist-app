@@ -41,13 +41,13 @@ const todoList = {
 
 // Handlers for onclick="" in HTML
 const handlers = {
-  addTodo: function() {
+  addTodo: () => {
     var addTodoTextInput = document.getElementById('addTodoTextInput');
     todoList.addTodo(addTodoTextInput.value);
     addTodoTextInput.value = ''; //Clear input back to default
     view.displayTodos();
   },
-  changeTodo: function() {
+  changeTodo: () => {
     const changeTodoPositionInput = document.getElementById('changeTodoPositionInput');
     const changeTodoTextInput = document.getElementById('changeTodoTextInput');
     todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
@@ -55,17 +55,17 @@ const handlers = {
     changeTodoTextInput.value = ''; //Clear input back to default
     view.displayTodos();
   },
-  deleteTodo: function (position) {
+  deleteTodo: (position) => {
     todoList.deleteTodo(position);
     view.displayTodos();
   },
-  toggleCompleted: function () {
+  toggleCompleted: () => {
     const toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput');
     todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
     toggleCompleted = ""; //Clear input back to default
     view.displayTodos();
   },
-  toggleAll: function() {
+  toggleAll: () => {
   todoList.toggleAll();
   view.displayTodos();
   }
@@ -73,7 +73,7 @@ const handlers = {
 
 // View object
 const view = {  
-  displayTodos: function() {
+  displayTodos: function() { // Arrow function no no, as 'this' would not be bound to the element
     const todosUl = document.querySelector('ul');
     todosUl.innerHTML = ''; // Make sure it starts from zero
 
@@ -93,13 +93,13 @@ const view = {
       todosUl.appendChild(todoLi);
     }, this); // Second argument declared here as 'this' refers to the view object but is passed in the callback function. 
   }, // Creates delete button
-    createDeleteButton: function() {
+    createDeleteButton: () => {
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.className = 'deleteButton';
     return deleteButton;
   },
-  setUpEventListeners: function() {
+  setUpEventListeners: () => {
     const todosUl = document.querySelector('ul');
     
     todosUl.addEventListener('click', function(event) {  
