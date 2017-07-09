@@ -57,10 +57,8 @@ const handlers = {
     changeTodoTextInput.value = ''; //Clear input back to default
     view.displayTodos();
   },
-  deleteTodo: function () {
-    const deleteTodoPositionInput = document.getElementById('deleteTodoPositionInput');
-    todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
-    deleteTodoPositionInput.value = "";
+  deleteTodo: function (position) {
+    todoList.deleteTodo(position);
     view.displayTodos();
   },
   toggleCompleted: function () {
@@ -90,13 +88,37 @@ const view = {
       } else {
         todoTextWithCompletetion = '( ) ' + todo.todoText;
       }
-      
+      // Gives each delete button an individual id  
+      todoLi.id = i;
       todoLi.textContent = todoTextWithCompletetion;
-      todosUl.appendChild(todoLi); // Inserting the li into the HTML
+      todoLi.appendChild(this.createDeleteButton());
+      todosUl.appendChild(todoLi); // Inserts the li into the HTML
     }
+  }, // Creates delete button
+    createDeleteButton: function() {
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'deleteButton';
+    return deleteButton;
+  },
+  setUpEventListeners: function() {
+    const todosUl = document.querySelector('ul');
+    
+    todosUl.addEventListener('click', function(event) {  
+      // Get the element that was clicked on
+      const elementClicked = event.target;
+
+      // Check if element clicked is a delete button
+      if (elementClicked.className === 'deleteButton') {
+        // Grabs parentNode (li) which is a string and parseInt turns it into a number
+        handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+      }
+    });
   }
 };
 
+// Calls event listerners
+view.setUpEventListeners();
 
 
 
