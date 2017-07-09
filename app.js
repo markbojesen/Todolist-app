@@ -72,26 +72,26 @@ const handlers = {
 };
 
 // View object
-const view = {
+const view = {  
   displayTodos: function() {
     const todosUl = document.querySelector('ul');
     todosUl.innerHTML = ''; // Make sure it starts from zero
-    for (let i = 0; i < todoList.todos.length; i++) {
+
+    todoList.todos.forEach(function(todo, position) {
       const todoLi = document.createElement('li');
-      const todo = todoList.todos[i];
-      let todoTextWithCompletetion = '';
-      
+      let todoTextWithCompletion = '';
+
       if (todo.completed === true) {
-        todoTextWithCompletetion = '(x) ' + todo.todoText;
+        todoTextWithCompletion = '(x) ' + todo.todoText;
       } else {
-        todoTextWithCompletetion = '( ) ' + todo.todoText;
+        todoTextWithCompletion = '( ) ' + todo.todoText;
       }
-      // Gives each delete button an individual id  
-      todoLi.id = i;
-      todoLi.textContent = todoTextWithCompletetion;
-      todoLi.appendChild(this.createDeleteButton());
-      todosUl.appendChild(todoLi); // Inserts the li into the HTML
-    }
+
+      todoLi.id = position;
+      todoLi.textContent = todoTextWithCompletion;
+      todoLi.appendChild(this.createDeleteButton()); //  'this' declared below on line 94.
+      todosUl.appendChild(todoLi);
+    }, this); // Second argument declared here as 'this' refers to the view object but is passed in the callback function. 
   }, // Creates delete button
     createDeleteButton: function() {
     const deleteButton = document.createElement('button');
